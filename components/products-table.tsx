@@ -299,7 +299,7 @@ export function ProductsTable() {
     return (
       <Card className="p-6">
         <div className="flex items-center justify-center">
-          <Loader2 className="w-5 h-5 animate-spin text-emerald-600" />
+          <Loader2 className="w-5 h-5 animate-spin" style={{ color: "#16537E" }} />
           <span className="ml-2 text-sm text-muted-foreground">Carregando produtos...</span>
         </div>
       </Card>
@@ -338,7 +338,7 @@ export function ProductsTable() {
         )}
         {searching && (
           <div className="absolute right-10 top-1/2 transform -translate-y-1/2">
-            <Loader2 className="w-3 h-3 animate-spin text-emerald-600" />
+            <Loader2 className="w-3 h-3 animate-spin" style={{ color: "#16537E" }} />
           </div>
         )}
       </div>
@@ -385,7 +385,7 @@ export function ProductsTable() {
                     <tr>
                       <td colSpan={4} className="p-4 text-center">
                         <div className="flex items-center justify-center">
-                          <Loader2 className="w-4 h-4 animate-spin text-emerald-600 mr-2" />
+                          <Loader2 className="w-4 h-4 animate-spin mr-2" style={{ color: "#16537E" }} />
                           <span className="text-xs text-muted-foreground">Carregando mais produtos...</span>
                         </div>
                       </td>
@@ -439,7 +439,10 @@ export function ProductsTable() {
             <Button
               onClick={saveEdit}
               disabled={saving || !isFormValid}
-              className="bg-emerald-600 hover:bg-emerald-700"
+              className="text-white"
+              style={{ backgroundColor: "#16537E" }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0f3a5f")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#16537E")}
             >
               {saving ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
               Confirmar

@@ -40,13 +40,14 @@ export async function POST(request: NextRequest) {
     const userData = {
       id: users.id,
       username: users.username,
+      nome: users.nome, // Include nome field
       loginTime: Date.now(),
     }
 
     // Create response with success
     const response = NextResponse.json({
       success: true,
-      user: { id: users.id, username: users.username },
+      user: { id: users.id, username: users.username, nome: users.nome }, // Include nome in response
     })
 
     response.cookies.set("auth-token", JSON.stringify(userData), {

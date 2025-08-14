@@ -84,7 +84,9 @@ export function ProductSearch() {
                 placeholder="Digite o SKU ou nome do produto..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-10 h-12 text-lg border-border focus:border-emerald-500 focus:ring-emerald-500"
+                className="pl-10 pr-10 h-12 text-lg border-border"
+                style={{ "--tw-ring-color": "#16537E" } as React.CSSProperties}
+                onFocus={(e) => (e.target.style.borderColor = "#16537E")}
               />
               {searchTerm && (
                 <Button
@@ -101,7 +103,10 @@ export function ProductSearch() {
             <Button
               type="submit"
               disabled={loading}
-              className="h-12 px-6 bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+              className="h-12 px-6 text-white font-medium"
+              style={{ backgroundColor: "#16537E" }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0f3a5f")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#16537E")}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Buscar"}
             </Button>
@@ -113,7 +118,7 @@ export function ProductSearch() {
       {loading && (
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
-            <Loader2 className="w-8 h-8 animate-spin text-emerald-600 mx-auto mb-3" />
+            <Loader2 className="w-8 h-8 animate-spin mx-auto mb-3" style={{ color: "#16537E" }} />
             <p className="text-muted-foreground">Carregando resultados...</p>
           </div>
         </div>
@@ -154,13 +159,19 @@ export function ProductSearch() {
               {products.map((product) => (
                 <Card
                   key={product.sku}
-                  className="hover:shadow-lg transition-all duration-200 hover:border-emerald-500/50 cursor-pointer group"
+                  className="hover:shadow-lg transition-all duration-200 cursor-pointer group"
+                  style={{ "--tw-border-opacity": "0.5" } as React.CSSProperties}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#16537E")}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = "")}
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
-                          <Package className="w-4 h-4 text-emerald-600" />
+                        <div
+                          className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors"
+                          style={{ backgroundColor: "#e6f2ff" }}
+                        >
+                          <Package className="w-4 h-4" style={{ color: "#16537E" }} />
                         </div>
                         <Badge variant="outline" className="text-xs font-mono">
                           {product.sku}

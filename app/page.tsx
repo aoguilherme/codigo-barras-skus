@@ -25,7 +25,10 @@ export default function Home() {
           <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-emerald-600 rounded-lg">
+                <div
+                  className="flex items-center justify-center w-10 h-10 rounded-lg"
+                  style={{ backgroundColor: "#16537E" }}
+                >
                   <Package className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -34,7 +37,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="flex items-center gap-4">
-                <span className="text-sm text-muted-foreground">Bem-vindo, {user?.username}</span>
+                <span className="text-sm text-muted-foreground">Bem-vindo, {user?.nome || user?.username}</span>
                 <Button
                   variant="outline"
                   size="sm"

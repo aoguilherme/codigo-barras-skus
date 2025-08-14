@@ -85,16 +85,16 @@ export function AddProduct() {
       <Card className="shadow-lg border-0 bg-card">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-xl font-semibold">
-            <Plus className="w-5 h-5 text-emerald-600" />
+            <Plus className="w-5 h-5" style={{ color: "#16537E" }} />
             Adicionar Novo Produto
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Success Alert */}
           {success && (
-            <Alert className="border-emerald-200 bg-emerald-50">
-              <CheckCircle className="w-4 h-4 text-emerald-600" />
-              <AlertDescription className="text-emerald-800">Produto adicionado com sucesso!</AlertDescription>
+            <Alert className="border-blue-200 bg-blue-50">
+              <CheckCircle className="w-4 h-4" style={{ color: "#16537E" }} />
+              <AlertDescription style={{ color: "#16537E" }}>Produto adicionado com sucesso!</AlertDescription>
             </Alert>
           )}
 
@@ -119,7 +119,9 @@ export function AddProduct() {
                   placeholder="Ex: R-477"
                   value={formData.sku}
                   onChange={(e) => handleInputChange("sku", e.target.value)}
-                  className="h-11 border-border focus:border-emerald-500 focus:ring-emerald-500 pr-10"
+                  className="h-11 border-border pr-10"
+                  style={{ "--tw-ring-color": "#16537E" } as React.CSSProperties}
+                  onFocus={(e) => (e.target.style.borderColor = "#16537E")}
                   disabled={loading}
                 />
                 {formData.sku && (
@@ -149,7 +151,9 @@ export function AddProduct() {
                   placeholder="Ex: BUCHA BIPARTIDA DO OLHAL DA BARRA"
                   value={formData.descricao}
                   onChange={(e) => handleInputChange("descricao", e.target.value)}
-                  className="h-11 border-border focus:border-emerald-500 focus:ring-emerald-500 pr-10"
+                  className="h-11 border-border pr-10"
+                  style={{ "--tw-ring-color": "#16537E" } as React.CSSProperties}
+                  onFocus={(e) => (e.target.style.borderColor = "#16537E")}
                   disabled={loading}
                 />
                 {formData.descricao && (
@@ -179,7 +183,9 @@ export function AddProduct() {
                   placeholder="Ex: 7899143613016"
                   value={formData.codigo_barras}
                   onChange={(e) => handleInputChange("codigo_barras", e.target.value)}
-                  className="h-11 border-border focus:border-emerald-500 focus:ring-emerald-500 font-mono pr-10"
+                  className="h-11 border-border font-mono pr-10"
+                  style={{ "--tw-ring-color": "#16537E" } as React.CSSProperties}
+                  onFocus={(e) => (e.target.style.borderColor = "#16537E")}
                   disabled={loading}
                 />
                 {formData.codigo_barras && (
@@ -202,7 +208,10 @@ export function AddProduct() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="flex-1 h-11 bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+                className="flex-1 h-11 text-white font-medium"
+                style={{ backgroundColor: "#16537E" }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0f3a5f")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#16537E")}
               >
                 {loading ? (
                   <>

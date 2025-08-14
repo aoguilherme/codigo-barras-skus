@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Package, Lock, User, Eye, EyeOff } from 'lucide-react'
+import { Package, Lock, User, Eye, EyeOff } from "lucide-react"
 
 export default function LoginPage() {
   const [username, setUsername] = useState("")
@@ -51,25 +51,31 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-emerald-100 flex items-center justify-center p-4">
+    <div
+      className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4"
+      style={{ background: "linear-gradient(to bottom right, #f0f9ff, #dbeafe)" }}
+    >
       <div className="w-full max-w-md">
         {/* Logo and Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
-            <div className="flex items-center justify-center w-16 h-16 bg-emerald-600 rounded-xl shadow-lg">
+            <div
+              className="flex items-center justify-center w-16 h-16 rounded-xl shadow-lg"
+              style={{ backgroundColor: "#16537E" }}
+            >
               <Package className="w-8 h-8 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Securely log in to your product management system.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Bem-vindo de Volta</h1>
+          <p className="text-gray-600">Faça seu Login</p>
         </div>
 
         {/* Login Form */}
         <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="space-y-1 pb-6">
-            <CardTitle className="text-2xl font-bold text-center text-gray-900">Log In</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center text-gray-900">Entrar</CardTitle>
             <CardDescription className="text-center text-gray-600">
-              Enter your credentials to access the system
+              Digite suas credenciais para acessar o sistema
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -82,7 +88,7 @@ export default function LoginPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="username" className="text-sm font-medium text-gray-700">
-                  Username
+                  Usuário
                 </Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -91,8 +97,11 @@ export default function LoginPage() {
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="pl-10 h-12 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                    placeholder="Enter your username"
+                    className="pl-10 h-12 border-gray-200"
+                    style={{ "--tw-ring-color": "#16537E", "--tw-border-opacity": "1" } as React.CSSProperties}
+                    onFocus={(e) => (e.target.style.borderColor = "#16537E")}
+                    onBlur={(e) => (e.target.style.borderColor = "#d1d5db")}
+                    placeholder="Digite seu usuário"
                     required
                   />
                 </div>
@@ -100,7 +109,7 @@ export default function LoginPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-medium text-gray-700">
-                  Password
+                  Senha
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -109,8 +118,11 @@ export default function LoginPage() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="pl-10 pr-10 h-12 border-gray-200 focus:border-emerald-500 focus:ring-emerald-500"
-                    placeholder="Enter your password"
+                    className="pl-10 pr-10 h-12 border-gray-200"
+                    style={{ "--tw-ring-color": "#16537E", "--tw-border-opacity": "1" } as React.CSSProperties}
+                    onFocus={(e) => (e.target.style.borderColor = "#16537E")}
+                    onBlur={(e) => (e.target.style.borderColor = "#d1d5db")}
+                    placeholder="Digite sua senha"
                     required
                   />
                   <button
@@ -125,23 +137,22 @@ export default function LoginPage() {
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-medium transition-colors duration-200"
+                className="w-full h-12 text-white font-medium transition-colors duration-200"
+                style={{ backgroundColor: "#16537E" }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#0f3a5f")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#16537E")}
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Logging in...
+                    Entrando...
                   </div>
                 ) : (
-                  "Log In"
+                  "Entrar"
                 )}
               </Button>
             </form>
-
-            <div className="mt-6 text-center">
-              <button className="text-sm text-emerald-600 hover:text-emerald-700 font-medium">Forgot Password?</button>
-            </div>
           </CardContent>
         </Card>
 
