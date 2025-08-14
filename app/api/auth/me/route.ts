@@ -18,7 +18,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Token expired" }, { status: 401 })
     }
 
-    return NextResponse.json({ user: { id: user.id, username: user.username } })
+    return NextResponse.json({
+      user: {
+        id: user.id,
+        username: user.username,
+        nome: user.nome,
+      },
+    })
   } catch (error) {
     return NextResponse.json({ error: "Invalid token" }, { status: 401 })
   }
