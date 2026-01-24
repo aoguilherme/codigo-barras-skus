@@ -1,24 +1,25 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
+import { createClient } from "@supabase/supabase-js"
 
 export async function POST(request: NextRequest) {
   try {
     const { username, password } = await request.json()
 
-    console.log("=== LOGIN ATTEMPT ===")
-    console.log("Username:", username)
-    console.log("Password:", password)
-
     if (!username || !password) {
-      console.log("Missing credentials")
       return NextResponse.json({ error: "Username and password are required" }, { status: 400 })
     }
 
-    const cookieStore = cookies()
-    const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+    // Create Supabase client directly with env vars
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-    // First, let's check if the users table exists and has data
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json({ error: "Database configuration error" }, { status: 500 })
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey)
+
+    // Query user from database
     const { data: users, error: queryError } = await supabase
       .from("users")
       .select("*")
@@ -26,16 +27,9 @@ export async function POST(request: NextRequest) {
       .eq("password", password)
       .single()
 
-    console.log("Query result:", users)
-    console.log("Query error:", queryError)
-
     if (queryError || !users) {
-      console.log("=== LOGIN FAILED - No user found ===")
-      console.log("Error details:", queryError)
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
     }
-
-    console.log("User found:", users)
 
     const userData = {
       id: users.id,
@@ -57,10 +51,6 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: "/",
     })
-
-    console.log("=== LOGIN SUCCESSFUL ===")
-    console.log("Cookie set for user:", users.username)
-    console.log("Cookie value:", JSON.stringify(userData))
 
     return response
   } catch (error) {
