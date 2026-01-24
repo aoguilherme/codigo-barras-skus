@@ -30,20 +30,28 @@ export default function LoginPage() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ username, password }),
       })
 
+      console.log("[v0] Response status:", response.status)
+      console.log("[v0] Response headers:", Object.fromEntries(response.headers.entries()))
+
       const data = await response.json()
+      console.log("[v0] Response data:", data)
 
       if (response.ok && data.success) {
-        console.log("Login successful, redirecting...")
-        // Force a hard redirect to ensure cookie is recognized
-        window.location.href = "/"
+        console.log("[v0] Login successful, waiting before redirect...")
+        // Wait a bit for cookie to be set, then redirect
+        setTimeout(() => {
+          console.log("[v0] Redirecting to /")
+          window.location.replace("/")
+        }, 100)
       } else {
         setError(data.error || "Credenciais inválidas")
       }
     } catch (error) {
-      console.error("Login error:", error)
+      console.error("[v0] Login error:", error)
       setError("Erro ao conectar com o servidor")
     } finally {
       setIsLoading(false)
