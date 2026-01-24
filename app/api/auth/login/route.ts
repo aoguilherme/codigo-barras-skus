@@ -19,29 +19,34 @@ export async function POST(request: NextRequest) {
 
     const supabase = createClient(supabaseUrl, supabaseKey)
 
-    // Query user from database
-    const { data: users, error: queryError } = await supabase
+    // Query user from database - use maybeSingle to avoid error when no rows found
+    const { data: user, error: queryError } = await supabase
       .from("users")
       .select("*")
       .eq("username", username)
       .eq("password", password)
-      .single()
+      .maybeSingle()
 
-    if (queryError || !users) {
-      return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+    if (queryError) {
+      console.error("[v0] Database query error:", queryError)
+      return NextResponse.json({ error: "Database error" }, { status: 500 })
+    }
+
+    if (!user) {
+      return NextResponse.json({ error: "Credenciais inválidas" }, { status: 401 })
     }
 
     const userData = {
-      id: users.id,
-      username: users.username,
-      nome: users.nome, // Include nome field
+      id: user.id,
+      username: user.username,
+      nome: user.nome, // Include nome field
       loginTime: Date.now(),
     }
 
     // Create response with success
     const response = NextResponse.json({
       success: true,
-      user: { id: users.id, username: users.username, nome: users.nome }, // Include nome in response
+      user: { id: user.id, username: user.username, nome: user.nome }, // Include nome in response
     })
 
     response.cookies.set("auth-token", JSON.stringify(userData), {
