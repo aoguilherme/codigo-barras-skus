@@ -26,17 +26,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const inactivityTimer = useRef<NodeJS.Timeout | null>(null)
   const INACTIVITY_TIMEOUT = 5 * 60 * 1000 // 5 minutes in milliseconds
 
-  const performLogout = useCallback(async () => {
-    try {
-      await fetch("/api/auth/logout", { method: "POST", credentials: "include" })
-    } catch (error) {
-      console.error("Logout failed:", error)
-    } finally {
-      // Always clear local state and sessionStorage
-      setUser(null)
-      sessionStorage.removeItem("auth-user")
-      window.location.href = "/login"
-    }
+  const performLogout = useCallback(() => {
+    setUser(null)
+    sessionStorage.removeItem("auth-user")
+    window.location.href = "/login"
   }, [])
 
   // Reset inactivity timer
@@ -98,30 +91,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("/api/auth/me", { credentials: "include" })
-      if (response.ok) {
-        const data = await response.json()
-        if (data.user) {
-          setUser(data.user)
-          // Sync with sessionStorage
-          sessionStorage.setItem("auth-user", JSON.stringify(data.user))
-          return
-        }
-      }
-      
-      // Fallback: check sessionStorage if cookie auth failed
+      // Primary auth: check sessionStorage
       const storedUser = sessionStorage.getItem("auth-user")
       if (storedUser) {
         const parsedUser = JSON.parse(storedUser)
         setUser(parsedUser)
+        setIsLoading(false)
+        return
       }
     } catch (error) {
-      // Fallback to sessionStorage on error
-      const storedUser = sessionStorage.getItem("auth-user")
-      if (storedUser) {
-        const parsedUser = JSON.parse(storedUser)
-        setUser(parsedUser)
-      }
+      console.error("Auth check failed:", error)
     } finally {
       setIsLoading(false)
     }

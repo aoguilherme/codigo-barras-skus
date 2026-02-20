@@ -37,10 +37,10 @@ export default function LoginPage() {
       const data = await response.json()
 
       if (response.ok && data.success) {
-        // Store auth in sessionStorage as backup
+        // Store auth in sessionStorage - this is the primary auth mechanism
         sessionStorage.setItem("auth-user", JSON.stringify(data.user))
-        // Force hard redirect to ensure cookie is processed
-        window.location.href = "/"
+        // Redirect to main page
+        router.push("/")
         return
       } else {
         setError(data.error || "Credenciais inválidas")
